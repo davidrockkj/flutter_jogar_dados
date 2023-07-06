@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:flutter_jogar_dados/dado.dart';
+
 void main() {
   return runApp(
     MaterialApp(
@@ -29,44 +31,68 @@ class Dadoos extends StatefulWidget {
 class _DadoosState extends State<Dadoos> {
   // Geramos os valores para as variáveis
   int numeroDadoEsquerda = 1;
+  int numeroDadoMeio = 1;
   int numeroDadoDireita = 1;
+  int qtdDados = 0;
 
-  void alterarFacesDados() {
+  int alterarFacesDados() {
+    return Random().nextInt(6) + 1;
+  }
+
+  void randomizas() {
     setState(() {
       numeroDadoEsquerda = Random().nextInt(6) + 1;
-      print('Dado esquerdo = $numeroDadoEsquerda');
+      numeroDadoMeio = Random().nextInt(6) + 1;
       numeroDadoDireita = Random().nextInt(6) + 1;
-      print('Dado direito = $numeroDadoDireita');
+    });
+  }
+
+  void numDados(int value) {
+    setState(() {
+      if (qtdDados == value) {
+        qtdDados = 0;
+      } else {
+        qtdDados = value;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 2.0),
-              child: TextButton(
-                onPressed: () {
-                  alterarFacesDados();
-                },
-                child: Image.asset('imagens/dado$numeroDadoEsquerda.png'),
+          Wrap(
+              children: List.generate(qtdDados, (index) {
+            return Dadin(
+                numeroDadoEsquerda: alterarFacesDados(),
+                alterarFacesDados: randomizas);
+              }).toList()
+              // [
+              //   Dadin(numeroDadoEsquerda: numeroDadoEsquerda, alterarFacesDados: alterarFacesDados),
+              //   Dadin(numeroDadoEsquerda: numeroDadoMeio, alterarFacesDados: alterarFacesDados),
+              //   Dadin(numeroDadoEsquerda: numeroDadoDireita, alterarFacesDados: alterarFacesDados),
+              // ],
               ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 2.0),
-              child: TextButton(
-                onPressed: () {
-                  alterarFacesDados();
-                },
-                child: Image.asset('imagens/dado$numeroDadoDireita.png'),
-              ),
-            ),
-          ),
+          Row(
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    numDados(1);
+                  },
+                  child: const Text('1 Dado')),
+              ElevatedButton(
+                  onPressed: () {
+                    numDados(2);
+                  },
+                  child: const Text('2 Dados')),
+              ElevatedButton(
+                  onPressed: () {
+                    numDados(3);
+                  },
+                  child: const Text('3 Dados')),
+            ],
+          )
         ],
       ),
     );
