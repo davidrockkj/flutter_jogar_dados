@@ -67,13 +67,7 @@ class _DadoosState extends State<Dadoos> {
             return Dadin(
                 numeroDadoEsquerda: alterarFacesDados(),
                 alterarFacesDados: randomizas);
-              }).toList()
-              // [
-              //   Dadin(numeroDadoEsquerda: numeroDadoEsquerda, alterarFacesDados: alterarFacesDados),
-              //   Dadin(numeroDadoEsquerda: numeroDadoMeio, alterarFacesDados: alterarFacesDados),
-              //   Dadin(numeroDadoEsquerda: numeroDadoDireita, alterarFacesDados: alterarFacesDados),
-              // ],
-              ),
+          }).toList()),
           Row(
             children: [
               ElevatedButton(
